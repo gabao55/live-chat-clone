@@ -10,6 +10,13 @@ let messageBeingSent = {
 function startApp () {
     // name = prompt("Informe seu nome no chat:");
     let user = {name: name};
+
+    const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+    promise.then(getMessages);
+}
+
+function getMessages (resposta) {
+    console.log(resposta.data);
 }
 
 function getMessages (request) {
