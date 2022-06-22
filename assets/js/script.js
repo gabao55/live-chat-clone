@@ -122,15 +122,31 @@ function refreshMessages () {
 
 function compareMessages (request) {
     refreshedMessages = request.data;
-    if (refreshedMessages !== currentMessages) {
-        console.log("novas mensagens");
-        let newMessages = refreshedMessages.filter(function(obj) {return currentMessages.indexOf(obj) == -1});
+    let newMessages = [];
+    if (JSON.stringify(refreshedMessages) !== JSON.stringify(currentMessages)) {
+        for (let i = 0 ; i < refreshedMessages.length ; i ++) {
+            let comparison = compareMessage(refreshedMessages[i], currentMessages[i]);
+            if (comparison) {
+                newMessages.push(comparison);
+            }
+        }
         console.log(newMessages);
         renderMessages(newMessages);
         currentMessages = refreshedMessages;
-        // chat.lastElementChild.scrollIntoView();
+        chat.lastElementChild.scrollIntoView();
     } else {
         console.log("sem mensagens novas");
+    }
+}
+
+function compareMessage (message1, message2) {
+    let message1JSON = JSON.stringify(message1);
+    let message2JSON = JSON.stringify(message2);
+
+    if (message1JSON !== message2JSON) {
+        return message1
+    } else {
+        return null
     }
 }
 
@@ -162,5 +178,5 @@ function compareParticipants (request) {
 }
 
 startApp();
-// setInterval(refreshMessages, 10000);
+setInterval(refreshMessages, 3000);
 setInterval(refreshParticipants, 10000);
