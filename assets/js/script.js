@@ -10,16 +10,17 @@ const chat = document.querySelector(".chat");
 const participants = document.querySelector(".recipient");
 let currentMessages;
 let refreshedMessages;
+let currentParticipants;
+let refreshedParticipants;
 
 function startApp () {
     const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
     promiseMessages.then(getMessages);
-    const promiseParticipantes = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
-    promiseParticipantes.then(getParticipantes);
+    const promiseParticipants = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
+    promiseParticipants.then(getParticipants);
 
     // name = prompt("Informe seu nome no chat:");
     let user = {name: name};
-    setInterval(refreshMessages, 3000);
 }
 
 // Function for testing scroll
@@ -61,7 +62,8 @@ function renderMessages (allMessages) {
     }
 }
 
-function getParticipantes (request) {
+function getParticipants (request) {
+    currentParticipants = request.data;
     renderParticipants(request.data);
 }
 
@@ -77,24 +79,6 @@ function renderParticipants (allParticipants) {
       `
 
       participants.innerHTML += participant;
-    }
-}
-
-function refreshMessages () {
-    const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
-    promiseMessages.then(compareMessages);
-}
-
-function compareMessages (request) {
-    refreshedMessages = request.data.length;
-    if (refreshedMessages > currentMessages) {
-        let newMessages = [];
-        for (let i = 0 ; currentMessages + i < refreshedMessages; i ++) {
-            newMessages.push(request.data[currentMessages + i]);
-        }
-        renderMessages(newMessages);
-        currentMessages = refreshedMessages;
-        chat.lastElementChild.scrollIntoView();
     }
 }
 
@@ -131,4 +115,53 @@ function cleanSelectedItems (element) {
     }
 }
 
+function refreshMessages () {
+    const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+    promiseMessages.then(compareMessages);
+}
+
+function compareMessages (request) {
+    refreshedMessages = request.data.length;
+    console.log(refreshedMessages, currentMessages);
+    if (refreshedMessages > currentMessages) {
+        let newMessages = [];
+        for (let i = 0 ; currentMessages + i < refreshedMessages; i ++) {
+            newMessages.push(request.data[currentMessages + i]);
+        }
+        console.log(newMessages);
+        renderMessages(newMessages);
+        currentMessages = refreshedMessages;
+        chat.lastElementChild.scrollIntoView();
+    }
+}
+
+function refreshParticipants () {
+    const promiseParticipants = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
+    promiseParticipants.then(compareParticipants);
+}
+
+function compareParticipants (request) {
+    refreshedParticipants = request.data;
+    if (refreshedParticipants !== currentParticipants) {
+        let newParticipants = [];
+        for (let i = 0 ; i < refreshedParticipants.length ; i ++) {
+            newParticipants.push(request.data[i]);
+        }
+        participants.innerHTML = `
+            <li class="option" onclick="selectItem(this);">
+                <div class="option-details">
+                    <ion-icon name="people"></ion-icon>
+                    <p>Todos</p>
+                </div>
+                <ion-icon name="checkmark-sharp"></ion-icon>
+            </li>
+        `
+        renderParticipants(newParticipants);
+        currentParticipants = refreshedParticipants;
+        participants.lastElementChild.scrollIntoView();
+    }
+}
+
 startApp();
+setInterval(refreshMessages, 3000);
+setInterval(refreshParticipants, 10000);
