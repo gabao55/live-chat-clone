@@ -1,26 +1,45 @@
 let name = "Pedro";
 const contactsTab = document.querySelector(".contacts");
 let messageBeingSent = {
-        sender: name,
-        recipient: "all",
+        from: name,
+        to: "all",
         message: null,
-        isReserved: false,
-    }
+        type: null,
+        time: null,
+    };
+const chat = document.querySelector(".chat");
+let data;
 
 function startApp () {
-    // name = prompt("Informe seu nome no chat:");
-    let user = {name: name};
-
     const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
     promise.then(getMessages);
-}
 
-function getMessages (resposta) {
-    console.log(resposta.data);
+    // name = prompt("Informe seu nome no chat:");
+    let user = {name: name};
 }
 
 function getMessages (request) {
-    console.log(request.data);
+    data = request.data;
+    renderMessages(request.data);
+}
+
+function renderMessages (allMessages) {
+    for (let i = 0 ; i < allMessages.length ; i ++) {
+        let message = `
+            <li>
+            <p class="${allMessages[i].type}">
+                <span class="time">(${allMessages[i].time}) </span
+                ><span class="name">${allMessages[i].from} </span> ${allMessages[i].text}
+            </p>
+            </li>
+            <li>
+        `
+        chat.innerHTML += message;
+    }
+}
+
+function defineMessageParameters (message) {
+
 }
 
 function showContacts () {
