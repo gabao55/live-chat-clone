@@ -20,6 +20,14 @@ header {
     background-color: #FFFFFF;
 }
 
+ion-icon:hover {
+    cursor: pointer;
+}
+
+.display-none {
+    display: none !important;
+}
+
 .chat {
     margin: 26px 0 84px 0;
     font-size: 14px;
@@ -86,15 +94,14 @@ header {
     color: #000000;
 }
 
-.select-contact {
-    width: 100%;
+.matte-background {
+    width: calc(100% - 259px);
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     z-index: 2;
-    display: block;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .selection {
@@ -126,6 +133,10 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.option:hover {
+    cursor: pointer;
 }
 
 .option > ion-icon {
