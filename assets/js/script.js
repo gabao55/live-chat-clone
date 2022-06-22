@@ -2,22 +2,26 @@ let name = "Pedro";
 const contactsTab = document.querySelector(".contacts");
 let messageBeingSent = {
         from: name,
-        to: "all",
-        message: null,
+        to: "Todos",
+        text: null,
         type: null,
-        time: null,
     };
 const chat = document.querySelector(".chat");
 const participants = document.querySelector(".recipient");
 
 function startApp () {
-    const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
-    promiseMessages.then(getMessages);
+    requestMessages();
     const promiseParticipantes = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
     promiseParticipantes.then(getParticipantes);
 
     // name = prompt("Informe seu nome no chat:");
     let user = {name: name};
+    setInterval(requestMessages, 3000);
+}
+
+function requestMessages () {
+    const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+    promiseMessages.then(getMessages);
 }
 
 function getMessages (request) {

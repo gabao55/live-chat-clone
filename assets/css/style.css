@@ -36,7 +36,7 @@ ion-icon:hover {
     color: #000000;
 }
 
-.all-chat {
+.message {
     background-color: #FFFFFF;
 }
 
@@ -44,7 +44,7 @@ ion-icon:hover {
     background-color: #DCDCDC;
 }
 
-.private-message {
+.private_message {
     background-color: #FFDEDE;
 }
 
