@@ -123,11 +123,14 @@ function refreshMessages () {
 function compareMessages (request) {
     refreshedMessages = request.data;
     if (refreshedMessages !== currentMessages) {
-        let newMessages = refreshedMessages.filter(x => !currentMessages.includes(x));
+        console.log("novas mensagens");
+        let newMessages = refreshedMessages.filter(function(obj) {return currentMessages.indexOf(obj) == -1});
         console.log(newMessages);
         renderMessages(newMessages);
         currentMessages = refreshedMessages;
-        chat.lastElementChild.scrollIntoView();
+        // chat.lastElementChild.scrollIntoView();
+    } else {
+        console.log("sem mensagens novas");
     }
 }
 
@@ -138,7 +141,7 @@ function refreshParticipants () {
 
 function compareParticipants (request) {
     refreshedParticipants = request.data;
-    if (refreshedParticipants !== currentParticipants) {
+    if (JSON.stringify(refreshedParticipants) !== JSON.stringify(currentParticipants)) {
         let newParticipants = [];
         for (let i = 0 ; i < refreshedParticipants.length ; i ++) {
             newParticipants.push(request.data[i]);
@@ -159,5 +162,5 @@ function compareParticipants (request) {
 }
 
 startApp();
-setInterval(refreshMessages, 3000);
-setInterval(refreshParticipants, 10000);
+// setInterval(refreshMessages, 10000);
+setInterval(refreshParticipants, 3000);
