@@ -1,5 +1,5 @@
-let name;
-let contactsTab = document.querySelector(".contacts");
+let name = "Pedro";
+const contactsTab = document.querySelector(".contacts");
 let messageBeingSent = {
         sender: name,
         recipient: "all",
@@ -8,7 +8,12 @@ let messageBeingSent = {
     }
 
 function startApp () {
-    name = prompt("Informe seu nome no chat:");
+    // name = prompt("Informe seu nome no chat:");
+    let user = {name: name};
+}
+
+function getMessages (request) {
+    console.log(request.data);
 }
 
 function showContacts () {
@@ -16,10 +21,10 @@ function showContacts () {
 }
 
 function hideContacts () {
-    let recipientUl = contactsTab.querySelector(".recipient [name='checkmark-sharp']");
-    let recipient = recipientUl.parentNode.querySelector("p").innerText;
-    let isReservedUl = contactsTab.querySelector(".is-reserved [name='checkmark-sharp']");
-    let isReserved = isReservedUl.parentNode.querySelector("p").innerText;
+    const recipientUl = contactsTab.querySelector(".recipient [name='checkmark-sharp']");
+    const recipient = recipientUl.parentNode.querySelector("p").innerText;
+    const isReservedUl = contactsTab.querySelector(".is-reserved [name='checkmark-sharp']");
+    const isReserved = isReservedUl.parentNode.querySelector("p").innerText;
 
     messageBeingSent.recipient = recipient;
 
@@ -38,7 +43,7 @@ function selectItem (element) {
 }
 
 function cleanSelectedItems (element) {
-    let parent = element.parentNode;
+    const parent = element.parentNode;
     if (parent.querySelector("[name='checkmark-sharp']")) {
         parent.querySelector("[name='checkmark-sharp']").remove();
     }
