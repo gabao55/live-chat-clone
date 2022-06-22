@@ -1,4 +1,4 @@
-let name = "Pedro";
+// let name = "Pedro";
 const contactsTab = document.querySelector(".contacts");
 let messageBeingSent = {
         from: name,
@@ -47,13 +47,25 @@ function cleanSelectedItems (element) {
 }
 
 function startApp () {
+    name = prompt("Informe seu nome no chat:");
+    let user = {name: name};
+    const promiseName = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", user);
+    promiseName.then(displayApp);
+    promiseName.catch(nameFailed);
+
+}
+
+function displayApp (response) {
+    console.log(response);
     const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
     promiseMessages.then(getMessages);
     const promiseParticipants = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
     promiseParticipants.then(getParticipants);
+}
 
-    // name = prompt("Informe seu nome no chat:");
-    let user = {name: name};
+function nameFailed (response) {
+    alert("Esse nome não é valido, por favor insira outro nome...");
+    window.location.reload();
 }
 
 // Function for testing scroll
@@ -179,5 +191,5 @@ function compareParticipants (response) {
 }
 
 startApp();
-setInterval(refreshMessages, 3000);
+// setInterval(refreshMessages, 3000);
 setInterval(refreshParticipants, 10000);
