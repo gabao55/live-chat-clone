@@ -130,6 +130,7 @@ function compareMessages (request) {
                 newMessages.push(comparison);
             }
         }
+        // TODO: Refresh shows old messages, fix it
         console.log(newMessages);
         renderMessages(newMessages);
         currentMessages = refreshedMessages;
