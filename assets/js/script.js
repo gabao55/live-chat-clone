@@ -75,9 +75,9 @@ function startApp () {
 //     chat.lastElementChild.scrollIntoView();
 // }
 
-function getMessages (request) {
-    currentMessages = request.data;
-    renderMessages(request.data);
+function getMessages (response) {
+    currentMessages = response.data;
+    renderMessages(response.data);
 }
 
 function renderMessages (allMessages) {
@@ -95,9 +95,9 @@ function renderMessages (allMessages) {
     }
 }
 
-function getParticipants (request) {
-    currentParticipants = request.data;
-    renderParticipants(request.data);
+function getParticipants (response) {
+    currentParticipants = response.data;
+    renderParticipants(response.data);
 }
 
 function renderParticipants (allParticipants) {
@@ -120,8 +120,8 @@ function refreshMessages () {
     promiseMessages.then(compareMessages);
 }
 
-function compareMessages (request) {
-    refreshedMessages = request.data;
+function compareMessages (response) {
+    refreshedMessages = response.data;
     let newMessages = [];
     if (JSON.stringify(refreshedMessages) !== JSON.stringify(currentMessages)) {
         for (let i = 0 ; i < refreshedMessages.length ; i ++) {
@@ -156,12 +156,12 @@ function refreshParticipants () {
     promiseParticipants.then(compareParticipants);
 }
 
-function compareParticipants (request) {
-    refreshedParticipants = request.data;
+function compareParticipants (response) {
+    refreshedParticipants = response.data;
     if (JSON.stringify(refreshedParticipants) !== JSON.stringify(currentParticipants)) {
         let newParticipants = [];
         for (let i = 0 ; i < refreshedParticipants.length ; i ++) {
-            newParticipants.push(request.data[i]);
+            newParticipants.push(response.data[i]);
         }
         participants.innerHTML = `
             <li class="option" onclick="selectItem(this);">
