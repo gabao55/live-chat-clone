@@ -8,23 +8,41 @@ let messageBeingSent = {
     };
 const chat = document.querySelector(".chat");
 const participants = document.querySelector(".recipient");
+let currentMessages;
+let refreshedMessages;
 
 function startApp () {
-    requestMessages();
+    const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+    promiseMessages.then(getMessages);
     const promiseParticipantes = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
     promiseParticipantes.then(getParticipantes);
 
     // name = prompt("Informe seu nome no chat:");
     let user = {name: name};
-    setInterval(requestMessages, 3000);
+    setInterval(refreshMessages, 3000);
 }
 
-function requestMessages () {
-    const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
-    promiseMessages.then(getMessages);
-}
+// Function for testing scroll
+// function testScroll () {
+//     const message = `
+//             <li>
+//             <p class="status">
+//                 <span class="time">(a) </span
+//                 ><span class="name">a </span> a
+//             </p>
+//             </li>
+//             <li>
+//         `
+//         chat.innerHTML += message;
+//         chat.innerHTML += message;
+//         chat.innerHTML += message;
+//         chat.innerHTML += message;
+//         chat.innerHTML += message;
+//     chat.lastElementChild.scrollIntoView();
+// }
 
 function getMessages (request) {
+    currentMessages = request.data.length;
     renderMessages(request.data);
 }
 
@@ -62,8 +80,22 @@ function renderParticipants (allParticipants) {
     }
 }
 
-function defineMessageParameters (message) {
+function refreshMessages () {
+    const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+    promiseMessages.then(compareMessages);
+}
 
+function compareMessages (request) {
+    refreshedMessages = request.data.length;
+    if (refreshedMessages > currentMessages) {
+        let newMessages = [];
+        for (let i = 0 ; currentMessages + i < refreshedMessages; i ++) {
+            newMessages.push(request.data[currentMessages + i]);
+        }
+        renderMessages(newMessages);
+        currentMessages = refreshedMessages;
+        chat.lastElementChild.scrollIntoView();
+    }
 }
 
 function showContacts () {
