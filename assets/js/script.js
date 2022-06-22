@@ -163,4 +163,4 @@ function compareParticipants (request) {
 
 startApp();
 // setInterval(refreshMessages, 10000);
-setInterval(refreshParticipants, 3000);
+setInterval(refreshParticipants, 10000);
