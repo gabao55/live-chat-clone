@@ -8,24 +8,25 @@ let messageBeingSent = {
         time: null,
     };
 const chat = document.querySelector(".chat");
-let data;
+const participants = document.querySelector(".recipient");
 
 function startApp () {
-    const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
-    promise.then(getMessages);
+    const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+    promiseMessages.then(getMessages);
+    const promiseParticipantes = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
+    promiseParticipantes.then(getParticipantes);
 
     // name = prompt("Informe seu nome no chat:");
     let user = {name: name};
 }
 
 function getMessages (request) {
-    data = request.data;
     renderMessages(request.data);
 }
 
 function renderMessages (allMessages) {
     for (let i = 0 ; i < allMessages.length ; i ++) {
-        let message = `
+        const message = `
             <li>
             <p class="${allMessages[i].type}">
                 <span class="time">(${allMessages[i].time}) </span
@@ -35,6 +36,25 @@ function renderMessages (allMessages) {
             <li>
         `
         chat.innerHTML += message;
+    }
+}
+
+function getParticipantes (request) {
+    renderParticipants(request.data);
+}
+
+function renderParticipants (allParticipants) {
+    for (let i = 0 ; i < allParticipants.length ; i ++) {
+        const participant = `
+            <li class="option" onclick="selectItem(this);">
+                <div class="option-details">
+                <ion-icon name="person-circle"></ion-icon>
+                <p>${allParticipants[i].name}</p>
+                </div>
+            </li>
+      `
+
+      participants.innerHTML += participant;
     }
 }
 
