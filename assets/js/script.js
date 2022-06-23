@@ -30,8 +30,8 @@ function cleanSelectedItems (element) {
 
 function startApp () {
     // TODO: Switch for prompt name input
-    // name = prompt("Informe seu nome no chat:");
-    // user.name = name;
+    name = prompt("Informe seu nome no chat:");
+    user.name = name;
     const promiseName = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", user);
     promiseName.then(displayApp);
     promiseName.catch(displayApp); // TODO: Trocar displayApp por nameFailed
@@ -66,7 +66,6 @@ function renderMessages (allMessages) {
                     ><span class="name">${allMessages[i].from}</span> ${allMessages[i].text}
                 </p>
                 </li>
-                <li>
             `
         } else if (allMessages[i].type === 'message') {
             message = `
@@ -76,18 +75,20 @@ function renderMessages (allMessages) {
                     ><span class="name">${allMessages[i].from}</span> para <span class="name">${allMessages[i].to} </span>${allMessages[i].text}
                 </p>
                 </li>
-                <li>
             `
         } else {
-            message = `
-                <li>
-                <p class="${allMessages[i].type}">
-                    <span class="time">(${allMessages[i].time}) </span
-                    ><span class="name">${allMessages[i].from}</span> reservadamente para <span class="name">${allMessages[i].to} </span>${allMessages[i].text}
-                </p>
-                </li>
-                <li>
-            `
+            if (allMessages[i].to === user.name || allMessages[i].from === user.name) {
+                message = `
+                    <li>
+                    <p class="${allMessages[i].type}">
+                        <span class="time">(${allMessages[i].time}) </span
+                        ><span class="name">${allMessages[i].from}</span> reservadamente para <span class="name">${allMessages[i].to} </span>${allMessages[i].text}
+                    </p>
+                    </li>
+                `
+            } else {
+                return
+            }
         }
         chat.innerHTML += message;
     }
