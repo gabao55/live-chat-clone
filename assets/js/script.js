@@ -139,35 +139,41 @@ function refreshMessages () {
 }
 
 function compareMessages (response) {
-    // TODO: Implement refresh messages functionality correctly
     let refreshedMessages = response.data;
     let newMessages = [];
-    console.log(refreshedMessages);
-    // for (let i = 0 ; i < refreshedMessages.length ; i ++) {
-    //     for (let j = 0 ; j < messagesDisplayed.length ; j ++) {
-    //         let comparison = compareMessage(refreshedMessages[i], messagesDisplayed[j]);
-    //         if (comparison) {
-    //             newMessages.push(comparison);
-    //         }
-    //     }
-    // }
-    // if (newMessages.length > 0) {
-    //     console.log(newMessages);
-    //     renderMessages(newMessages);
-    //     chat.lastElementChild.scrollIntoView();
-    // } else {
-    //     console.log("sem mensagens novas");
-    // }
+    let lastMessageIndex = refreshedMessages.length - 1;
+    let i = messagesDisplayed.length - 1;
+    let isLastMessage = false;
+    while (isLastMessage === false) {
+        if (i === -1) {
+            i = messagesDisplayed.length;
+            lastMessageIndex --;
+        }
+        isLastMessage = checkLastMessageSent(
+            refreshedMessages[lastMessageIndex],
+            messagesDisplayed[i]
+            );
+        i --;
+    }
+
+    for (let i = lastMessageIndex + 1 ; i < refreshedMessages.length ; i ++) {
+        newMessages.push(refreshedMessages[i]);
+    }
+
+    if (newMessages.length > 0) {
+        renderMessages(newMessages);
+        chat.lastElementChild.scrollIntoView();
+    }
 }
 
-function compareMessage (message1, message2) {
+function checkLastMessageSent (message1, message2) {
     let message1JSON = JSON.stringify(message1);
     let message2JSON = JSON.stringify(message2);
 
-    if (message1JSON !== message2JSON) {
-        return message1
+    if (message1JSON === message2JSON) {
+        return true
     } else {
-        return null
+        return false
     }
 }
 
@@ -256,6 +262,6 @@ function messageError (error) {
 }
 
 startApp();
-// setInterval(refreshMessages, 3000);
+setInterval(refreshMessages, 3000);
 setInterval(ping, 5000);
 setInterval(refreshParticipants, 10000);
