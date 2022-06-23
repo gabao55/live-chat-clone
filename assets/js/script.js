@@ -30,6 +30,7 @@ function cleanSelectedItems (element) {
 }
 
 function startApp () {
+    // TODO: Switch for prompt name input
     // name = prompt("Informe seu nome no chat:");
     // user.name = name;
     const promiseName = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", user);
@@ -138,6 +139,7 @@ function refreshMessages () {
 }
 
 function compareMessages (response) {
+    // TODO: Implement refresh messages functionality correctly
     let refreshedMessages = response.data;
     let newMessages = [];
     console.log(refreshedMessages);
@@ -209,6 +211,7 @@ function pingError (error) {
 }
 
 function sendMessage() {
+    // TODO: Treat message before sending it and fix bugs
     const messageText = document.querySelector(".chat-bar input").value;
     if (!messageText) {
         return
@@ -247,6 +250,7 @@ function messageSentSuccessfully (response) {
 }
 
 function messageError (error) {
+    // TODO: Develop error handling for sending messages
     console.log(error);
     alert("Erro ao enviar mensagem, tente novamente");
 }
