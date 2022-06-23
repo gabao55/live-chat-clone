@@ -1,4 +1,7 @@
 // let name = "Pedro";
+let user = {
+    name: "PedroMóChavãoPataty"
+}
 const contactsTab = document.querySelector(".contacts");
 let messageBeingSent = {
         from: name,
@@ -8,8 +11,7 @@ let messageBeingSent = {
     };
 const chat = document.querySelector(".chat");
 const participants = document.querySelector(".recipient");
-let currentMessages;
-let refreshedMessages;
+let messagesDisplayed = [];
 let currentParticipants;
 let refreshedParticipants;
 
@@ -47,8 +49,8 @@ function cleanSelectedItems (element) {
 }
 
 function startApp () {
-    name = prompt("Informe seu nome no chat:");
-    let user = {name: name};
+    // name = prompt("Informe seu nome no chat:");
+    // user.name = name;
     const promiseName = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", user);
     promiseName.then(displayApp);
     promiseName.catch(nameFailed);
@@ -56,7 +58,6 @@ function startApp () {
 }
 
 function displayApp (response) {
-    console.log(response);
     const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
     promiseMessages.then(getMessages);
     const promiseParticipants = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
@@ -88,12 +89,12 @@ function nameFailed (response) {
 // }
 
 function getMessages (response) {
-    currentMessages = response.data;
     renderMessages(response.data);
 }
 
 function renderMessages (allMessages) {
     for (let i = 0 ; i < allMessages.length ; i ++) {
+        messagesDisplayed.push(allMessages[i]);
         const message = `
             <li>
             <p class="${allMessages[i].type}">
@@ -133,23 +134,24 @@ function refreshMessages () {
 }
 
 function compareMessages (response) {
-    refreshedMessages = response.data;
+    let refreshedMessages = response.data;
     let newMessages = [];
-    if (JSON.stringify(refreshedMessages) !== JSON.stringify(currentMessages)) {
-        for (let i = 0 ; i < refreshedMessages.length ; i ++) {
-            let comparison = compareMessage(refreshedMessages[i], currentMessages[i]);
-            if (comparison) {
-                newMessages.push(comparison);
-            }
-        }
-        // TODO: Refresh shows old messages, fix it
-        console.log(newMessages);
-        renderMessages(newMessages);
-        currentMessages = refreshedMessages;
-        chat.lastElementChild.scrollIntoView();
-    } else {
-        console.log("sem mensagens novas");
-    }
+    console.log(refreshedMessages);
+    // for (let i = 0 ; i < refreshedMessages.length ; i ++) {
+    //     for (let j = 0 ; j < messagesDisplayed.length ; j ++) {
+    //         let comparison = compareMessage(refreshedMessages[i], messagesDisplayed[j]);
+    //         if (comparison) {
+    //             newMessages.push(comparison);
+    //         }
+    //     }
+    // }
+    // if (newMessages.length > 0) {
+    //     console.log(newMessages);
+    //     renderMessages(newMessages);
+    //     chat.lastElementChild.scrollIntoView();
+    // } else {
+    //     console.log("sem mensagens novas");
+    // }
 }
 
 function compareMessage (message1, message2) {
@@ -190,6 +192,19 @@ function compareParticipants (response) {
     }
 }
 
+function ping() {
+    const promise = axios.post(
+        "https://mock-api.driven.com.br/api/v6/uol/status",
+        user
+    )
+    promise.catch(pingError);
+}
+
+function pingError (error) {
+    alert("Conexão perdida, reinicie o chat.");
+}
+
 startApp();
 // setInterval(refreshMessages, 3000);
+setInterval(ping, 5000);
 setInterval(refreshParticipants, 10000);
