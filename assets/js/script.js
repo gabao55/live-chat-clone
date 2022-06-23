@@ -1,4 +1,3 @@
-// let name = "Pedro";
 let user = {
     name: "PedroMóChavãoPataty"
 }
