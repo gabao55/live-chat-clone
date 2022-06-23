@@ -50,25 +50,6 @@ function nameFailed (response) {
     window.location.reload();
 }
 
-// Function for testing scroll
-// function testScroll () {
-//     const message = `
-//             <li>
-//             <p class="status">
-//                 <span class="time">(a) </span
-//                 ><span class="name">a </span> a
-//             </p>
-//             </li>
-//             <li>
-//         `
-//         chat.innerHTML += message;
-//         chat.innerHTML += message;
-//         chat.innerHTML += message;
-//         chat.innerHTML += message;
-//         chat.innerHTML += message;
-//     chat.lastElementChild.scrollIntoView();
-// }
-
 function getMessages (response) {
     renderMessages(response.data);
 }
