@@ -231,6 +231,7 @@ function sendMessage() {
 }
 
 function messageSentSuccessfully (response) {
+    document.querySelector(".chat-bar input").value = "";
     console.log(response.status);
     refreshMessages();
 }
