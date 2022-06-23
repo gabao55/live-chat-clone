@@ -29,7 +29,6 @@ function cleanSelectedItems (element) {
 }
 
 function startApp () {
-    // TODO: Switch for prompt name input
     name = prompt("Informe seu nome no chat:");
     user.name = name;
     const promiseName = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", user);
