@@ -59,7 +59,7 @@ function cleanSelectedItems (element) {
 }
 
 function startApp () {
-    name = prompt("Informe seu nome no chat:");
+    let name = document.querySelector(".entry-page input").value;
     user.name = name;
     const promiseName = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", user);
     promiseName.then(displayApp);
@@ -68,6 +68,8 @@ function startApp () {
 }
 
 function displayApp (response) {
+    document.querySelector(".entry-page").remove();
+    setInterval(ping, 5000);
     const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
     promiseMessages.then(getMessages);
     const promiseParticipants = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
@@ -81,6 +83,7 @@ function nameFailed (response) {
 
 function getMessages (response) {
     renderMessages(response.data);
+    setInterval(refreshMessages, 3000);
 }
 
 function renderMessages (allMessages) {
@@ -126,6 +129,7 @@ function renderMessages (allMessages) {
 function getParticipants (response) {
     currentParticipants = response.data;
     renderParticipants(response.data);
+    setInterval(refreshParticipants, 10000);
 }
 
 function renderParticipants (allParticipants) {
@@ -271,7 +275,6 @@ document.querySelector(".chat-bar div input").addEventListener("keypress", funct
 
 function messageSentSuccessfully (response) {
     document.querySelector(".chat-bar input").value = "";
-    console.log(response.status);
     refreshMessages();
 }
 
@@ -281,8 +284,3 @@ function messageError (error) {
     alert("Erro ao enviar mensagem, tente novamente");
     window.location.reload()
 }
-
-startApp();
-setInterval(refreshMessages, 3000);
-setInterval(ping, 5000);
-setInterval(refreshParticipants, 10000);
