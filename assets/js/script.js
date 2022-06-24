@@ -230,6 +230,12 @@ function sendMessage() {
     promise.catch(messageError);
 }
 
+document.querySelector(".chat-bar input").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
+
 function messageSentSuccessfully (response) {
     document.querySelector(".chat-bar input").value = "";
     console.log(response.status);
