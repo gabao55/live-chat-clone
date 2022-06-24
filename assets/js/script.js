@@ -13,6 +13,36 @@ function showContacts () {
 }
 
 function hideContacts () {
+    let chatBar = document.querySelector(".chat-bar > div");
+    const toUl = contactsTab.querySelector(".recipient [name='checkmark-sharp']");
+    const to = toUl.parentNode.querySelector("p").innerText;
+    const typeUl = contactsTab.querySelector(".is-reserved [name='checkmark-sharp']");
+    const type = typeUl.parentNode.querySelector("p").innerText;
+
+    if (to === user.name) {
+        alert("Não é possível enviar mensages para si mesmo");
+        return
+    }
+
+    let messageDetails = `Enviando para ${to}`
+
+    if (type === "Reservadamente" && to !== "Todos") {
+        messageDetails += " (reservadamente)"
+    }
+
+    chatBar.innerHTML = "";
+
+    chatBar.innerHTML += `
+        <input type="text" placeholder="Escreva aqui..." />
+        <p>${messageDetails}</p>
+    `
+
+    document.querySelector(".chat-bar div input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    });
+
     contactsTab.classList.add("display-none")
 }
 
@@ -215,6 +245,10 @@ function sendMessage() {
         messageType = "private_message";
     }
 
+    if (messageType === "private_message" && to === "Todos") {
+        messageType = "message";
+    }
+
     const message = {
         from: user.name,
         to: to,
@@ -230,7 +264,7 @@ function sendMessage() {
     promise.catch(messageError);
 }
 
-document.querySelector(".chat-bar input").addEventListener("keypress", function(event) {
+document.querySelector(".chat-bar div input").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         sendMessage();
     }
