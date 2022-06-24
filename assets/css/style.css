@@ -32,6 +32,7 @@ ion-icon:hover {
 }
 
 .chat {
+    width: 100%;
     margin: 106px 0 84px 0;
     font-size: 14px;
     line-height: 20px;
