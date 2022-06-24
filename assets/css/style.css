@@ -57,6 +57,7 @@ ion-icon:hover {
     background-color: rgba(231, 231, 231, 1);
     border-radius: 9px;
     border: none;
+    cursor: pointer;
 }
 
 header {
@@ -173,6 +174,20 @@ header {
     right: 0;
     z-index: 2;
     background-color: #FFFFFF;
+    overflow-y: scroll;
+}
+
+.selection::-webkit-scrollbar {
+    width: 4px;
+}
+
+.selection::-webkit-scrollbar-track {
+    background: #FFFFFF;
+}
+
+.selection::-webkit-scrollbar-thumb {
+  background: #AAAAAA;
+  border-radius: 10px;
 }
 
 .selection-description {
@@ -218,4 +233,8 @@ header {
 .option-details p {
     font-size: 16px;
     font-weight: 400;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
