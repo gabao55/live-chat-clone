@@ -284,3 +284,9 @@ function messageError (error) {
     alert("Erro ao enviar mensagem, tente novamente");
     window.location.reload()
 }
+
+document.querySelector(".entry-page input").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        startApp();
+    }
+});

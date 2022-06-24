@@ -124,6 +124,10 @@ header {
     background-color: #FFFFFF;
 }
 
+.chat-bar div {
+    width: 100%;
+}
+
 .chat-bar input {
     padding-left: 18px;
     height: 100%;
