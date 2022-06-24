@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
 * {
     box-sizing: border-box;
@@ -95,6 +95,21 @@ ion-icon:hover {
     font-weight: 400;
     font-style: italic;
     color: #000000;
+}
+
+.chat-bar input:focus::placeholder {
+    color: transparent;
+}
+
+.chat-bar input:focus {
+    outline: none;
+}
+
+.chat-bar p {
+    margin-top: 6px;
+    padding-left: 18px;
+    font-size: 14px;
+    font-weight: 300;
 }
 
 .matte-background {
