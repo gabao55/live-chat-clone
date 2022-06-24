@@ -33,7 +33,7 @@ function startApp () {
     user.name = name;
     const promiseName = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", user);
     promiseName.then(displayApp);
-    promiseName.catch(displayApp); // TODO: Trocar displayApp por nameFailed
+    promiseName.catch(nameFailed);
 
 }
 
