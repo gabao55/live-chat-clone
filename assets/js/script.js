@@ -227,7 +227,6 @@ function pingError (error) {
 }
 
 function sendMessage() {
-    // TODO: Treat message before sending it and fix bugs
     const messageText = document.querySelector(".chat-bar input").value;
     if (!messageText) {
         return
