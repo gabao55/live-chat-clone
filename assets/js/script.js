@@ -279,6 +279,7 @@ function messageError (error) {
     // TODO: Develop error handling for sending messages
     console.log(error);
     alert("Erro ao enviar mensagem, tente novamente");
+    window.location.reload()
 }
 
 startApp();
