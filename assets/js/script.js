@@ -7,6 +7,7 @@ const participants = document.querySelector(".recipient");
 let messagesDisplayed = [];
 let currentParticipants;
 let refreshedParticipants;
+let entryPage = document.querySelector(".entry-page");
 
 function showContacts () {
     contactsTab.classList.remove("display-none")
@@ -61,6 +62,13 @@ function cleanSelectedItems (element) {
 function startApp () {
     let name = document.querySelector(".entry-page input").value;
     user.name = name;
+    entryPage.querySelector("input").remove();
+    entryPage.querySelector("button").remove();
+    entryPage.innerHTML += `
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" alt="" />
+        <p>Entrando...</p>
+    `;
+    setInterval(ping, 5000);
     const promiseName = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", user);
     promiseName.then(displayApp);
     promiseName.catch(nameFailed);
@@ -68,8 +76,6 @@ function startApp () {
 }
 
 function displayApp (response) {
-    document.querySelector(".entry-page").remove();
-    setInterval(ping, 5000);
     const promiseMessages = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
     promiseMessages.then(getMessages);
     const promiseParticipants = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
@@ -129,6 +135,7 @@ function renderMessages (allMessages) {
 function getParticipants (response) {
     currentParticipants = response.data;
     renderParticipants(response.data);
+    entryPage.remove();
     setInterval(refreshParticipants, 10000);
 }
 
