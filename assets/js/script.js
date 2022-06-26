@@ -279,9 +279,7 @@ function messageSentSuccessfully (response) {
 }
 
 function messageError (error) {
-    // TODO: Develop error handling for sending messages
-    console.log(error);
-    alert("Erro ao enviar mensagem, tente novamente");
+    alert("Erro ao enviar mensagem, a conexão foi perdida");
     window.location.reload()
 }
 
