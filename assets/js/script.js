@@ -135,7 +135,7 @@ function getParticipants (response) {
 function renderParticipants (allParticipants) {
     for (let i = 0 ; i < allParticipants.length ; i ++) {
         const participant = `
-            <li class="option" onclick="selectItem(this);">
+            <li class="option" onclick="selectItem(this);" data-identifier="participant">
                 <div class="option-details">
                 <ion-icon name="person-circle"></ion-icon>
                 <p>${allParticipants[i].name}</p>
@@ -204,7 +204,7 @@ function compareParticipants (response) {
             newParticipants.push(response.data[i]);
         }
         participants.innerHTML = `
-            <li class="option" onclick="selectItem(this);">
+            <li class="option" onclick="selectItem(this);" data-identifier="participant">
                 <div class="option-details">
                     <ion-icon name="people"></ion-icon>
                     <p>Todos</p>
