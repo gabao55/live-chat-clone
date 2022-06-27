@@ -99,6 +99,8 @@ header {
     padding: 13px 8px;
     border-radius: 2px;
     margin-bottom: 4px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .time {
