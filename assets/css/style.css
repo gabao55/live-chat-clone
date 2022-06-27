@@ -103,6 +103,14 @@ header {
     flex-wrap: wrap;
 }
 
+.chat span {
+    margin-right: 3px;
+}
+
+.chat span:last-child {
+    margin-left: 3px;
+}
+
 .time {
     color: #AAAAAA;
 }

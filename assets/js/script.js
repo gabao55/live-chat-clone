@@ -100,8 +100,8 @@ function renderMessages (allMessages) {
             message = `
                 <li>
                 <p class="${allMessages[i].type}">
-                    <span class="time">(${allMessages[i].time}) </span
-                    ><span class="name">${allMessages[i].from}</span> ${allMessages[i].text}
+                    <span class="time">(${allMessages[i].time})</span
+                    ><span class="name">${allMessages[i].from}</span>${allMessages[i].text}
                 </p>
                 </li>
             `
