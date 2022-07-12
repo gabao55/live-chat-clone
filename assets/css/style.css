@@ -96,6 +96,7 @@ header {
 }
 
 .chat p {
+    max-width: 100%;
     padding: 13px 8px;
     border-radius: 2px;
     margin-bottom: 4px;
@@ -105,6 +106,7 @@ header {
 }
 
 .chat span {
+    max-width: 100%;
     margin-right: 3px;
     word-wrap: break-word;
 }
