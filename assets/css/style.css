@@ -106,6 +106,7 @@ header {
 
 .chat span {
     margin-right: 3px;
+    word-wrap: break-word;
 }
 
 .chat span:last-child {
